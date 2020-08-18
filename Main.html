@@ -1,0 +1,268 @@
++<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="Style.css" />
+</head>
+<body>
+    <script src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js">
+    </script>
+    <!-- R	= Rc/127.5*avg                      for avg < 128 -->
+    <!-- (2 - Rc/127.5)*avg + 2*Rc - 255   for avg >=128 -->
+    <script>
+        var image = null;
+        var size = 0;
+		var darkImg = null;
+        function downloadFile() {
+            var File = document.getElementById("file");
+            var can = document.getElementById("down");
+            image = new SimpleImage(File);
+			darkImg=new SimpleImage(File);
+            image.drawTo(can);
+            size = image.getWidth() * image.getHeight();
+        }
+        function makeGray() {
+            if (IsImageLoaded()) {
+                var img = new SimpleImage(image);
+                for (var pixel of img.values()) {
+                    var avr = (pixel.getRed() + pixel.getBlue() + pixel.getGreen()) / 3;
+                    pixel.setRed(avr);
+                    pixel.setGreen(avr);
+                    pixel.setBlue(avr);
+                }
+                var File = document.getElementById("down");
+                img.drawTo(File);
+            }
+        }
+        function Clear() {
+            if (IsImageLoaded()) {
+                var File = document.getElementById("down");
+                image.drawTo(File);
+				darkImg=new SimpleImage(image);
+				var ran=document.getElementById("range1");
+				ran.value=0;
+            }
+        }
+        function IsImageLoaded() {
+            if (image == null || !image.complete()) {
+                alert("Image is not loaded!");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        function makeRed() {
+            if (IsImageLoaded()) {
+                var img = new SimpleImage(image);
+                doRed(img);
+                var can = document.getElementById("down");
+                img.drawTo(can);
+            }
+        }
+        function doRed(img) {
+            for (var pixel of img.values()) {
+                var avr = (pixel.getRed() + pixel.getBlue() + pixel.getGreen()) / 3;
+                if (avr < 128) {
+                    pixel.setRed(2 * avr);
+                    pixel.setGreen(0);
+                    pixel.setBlue(0);
+                }
+                else {
+                    pixel.setRed(255);
+                    pixel.setBlue(2 * avr - 255);
+                    pixel.setGreen(2 * avr - 255);
+                }
+            }
+        }
+        function doGreen(img) {
+            for (var pixel of img.values()) {
+                var avr = (pixel.getRed() + pixel.getBlue() + pixel.getGreen()) / 3;
+                if (avr < 128) {
+                    pixel.setGreen(2 * avr);
+                    pixel.setRed(0);
+                    pixel.setBlue(0);
+                }
+                else {
+                    pixel.setGreen(255);
+                    pixel.setRed(2 * avr - 255);
+                    pixel.setBlue(2 * avr - 255);
+                }
+            }
+        }
+        function makeGreen() {
+            if (IsImageLoaded()) {
+                var img = new SimpleImage(image);
+                doGreen(img);
+                for (var pixel of img.values()) {
+                }
+                var can = document.getElementById("down");
+                img.drawTo(can);
+            }
+        }
+        function makeRainbow() {
+            if (IsImageLoaded()) {
+                var img = new SimpleImage(image);
+                for (var pixel of img.values()) {
+                    var avr = (pixel.getRed() + pixel.getBlue() + pixel.getGreen()) / 3;
+                    if (pixel.getY() < img.getHeight() / 7) {
+                        if (avr < 128) {
+                            pixel.setRed(2 * avr);
+                            pixel.setGreen(0);
+                            pixel.setBlue(0);
+                        }
+                        else {
+                            pixel.setRed(255);
+                            pixel.setGreen(2 * avr - 255);
+                            pixel.setBlue(2 * avr - 255);
+                        }
+                    }
+                    if (pixel.getY() < img.getHeight() * 2 / 7 && pixel.getY() > img.getHeight() / 7) {
+                        if (avr < 128) {
+                            pixel.setRed(2 * avr);
+                            pixel.setGreen(4 / 5 * avr);
+                            pixel.setBlue(0);
+                        }
+                        else {
+                            pixel.setRed(255);
+                            pixel.setGreen(6 / 5 * avr - 51);
+                            pixel.setBlue(2 * avr - 255);
+                        }
+                    }
+                    if (pixel.getY() < img.getHeight() * 3 / 7 && pixel.getY() > img.getHeight() * 2 / 7) {
+                        if (avr < 128) {
+                            pixel.setRed(2 * avr);
+                            pixel.setGreen(2 * avr);
+                            pixel.setBlue(0);
+                        }
+                        else {
+                            pixel.setRed(255);
+                            pixel.setGreen(255);
+                            pixel.setBlue(2 * avr - 255);
+                        }
+                    }
+                    if (pixel.getY() < img.getHeight() * 4 / 7 && pixel.getY() > img.getHeight() * 3 / 7) {
+                        if (avr < 128) {
+                            pixel.setRed(0);
+                            pixel.setGreen(2 * avr);
+                            pixel.setBlue(0);
+                        }
+                        else {
+                            pixel.setRed(2 * avr - 255);
+                            pixel.setGreen(255);
+                            pixel.setBlue(2 * avr - 255);
+                        }
+                    }
+                    if (pixel.getY() < img.getHeight() * 5 / 7 && pixel.getY() > img.getHeight() * 4 / 7) {
+                        if (avr < 128) {
+                            pixel.setRed(0);
+                            pixel.setGreen(0);
+                            pixel.setBlue(2 * avr);
+                        }
+                        else {
+                            pixel.setRed(2 * avr - 255);
+                            pixel.setGreen(2 * avr - 255);
+                            pixel.setBlue(255);
+                        }
+                    }
+                    if (pixel.getY() < img.getHeight() * 6 / 7 && pixel.getY() > img.getHeight() * 5 / 7) {
+                        if (avr < 128) {
+                            pixel.setRed(4 / 5 * avr);
+                            pixel.setGreen(0);
+                            pixel.setBlue(2 * avr);
+                        }
+                        else {
+                            pixel.setRed(6 / 5 * avr - 51);
+                            pixel.setGreen(2 * avr - 255);
+                            pixel.setBlue(255);
+                        }
+                    }
+                    if (pixel.getY() > img.getHeight() * 6 / 7) {
+                        if (avr < 128) {
+                            pixel.setRed(8 / 5 * avr);
+                            pixel.setGreen(0);
+                            pixel.setBlue(8 / 5 * avr);
+							
+                        }
+                        else {
+                            pixel.setRed(2 / 5 * avr + 153);
+                            pixel.setGreen(2 * avr - 255);
+                            pixel.setBlue(2 / 5 * avr + 153);
+							
+                        }
+                    }
+                }
+                var File = document.getElementById("down");
+                img.drawTo(File);
+            }
+        }
+        function makeBlur() {
+            if (IsImageLoaded()) {
+                var img = new SimpleImage(image.getWidth(), image.getHeight());
+                for (var pixel of image.values()) {
+                    var rand = Math.random();
+                    var x = pixel.getX();
+                    var y = pixel.getY();
+                    if (rand < 1 / 2) {
+                        img.setPixel(x,y,pixel);
+                    }
+					else{
+                        var xR = Math.round(Math.random() * 20) - 10;
+                        var yR = Math.abs(xR) - 10;
+                        var r = Math.random();
+                        if (r < 1 / 2) { yR=yR*(-1); }
+
+                        if (x + xR > 0 && y + yR > 0 && x + xR < img.getWidth() && y + yR < img.getHeight()) {
+							var pix=image.getPixel(x + xR, y + yR);
+                            img.setPixel(x, y, pix);
+						}
+						else{
+							img.setPixel(x,y,pixel);
+						}
+					}
+                }
+            }
+			var doc=document.getElementById("down");
+			img.drawTo(doc);
+        }
+        function makeDarker() {
+			var rez=document.getElementById("down");
+			for(var pixel of darkImg.values()){
+				pixel.setBlue(pixel.getBlue()-10);
+				pixel.setGreen(pixel.getGreen()-10);
+				pixel.setRed(pixel.getRed()-10);
+			}
+			darkImg.drawTo(rez);
+		}
+		function makeLighter(){
+			var rez=document.getElementById("down");
+			for(var pixel of darkImg.values()){
+				pixel.setBlue(pixel.getBlue()+10);
+				pixel.setGreen(pixel.getGreen()+10);
+				pixel.setRed(pixel.getRed()+10);
+			}
+			darkImg.drawTo(rez);
+		}
+    </script>
+
+    <h1>Mini-project</h1>
+    <div id="ddd"> <canvas id="down"></canvas></div>
+
+
+    <div id="main">
+        <h2>Choose file</h2>
+        <input type="file" multiple onchange="downloadFile()" id="file">
+        <h3>Choose filter</h3>
+        <button id="greyfilter" onclick="makeGray()">Make gray</button>
+        <button id="redfilter" onclick="makeRed()">Make red</button>
+        <button id="greenfilter" onclick="makeGreen()">Make green</button>
+        <button id="rainbow" onclick="makeRainbow()">Make rainbow</button>
+        <button id="blurfilter" onclick="makeBlur()">Make blur</button><br/>
+		<button id="Lighter" onclick="makeLighter()">Make lighter(can click several times)</button>
+		<button id="Darker" onclick="makeDarker()">Make darker(you can click several times)</button><hr id="wi" />
+        <button id="reset" onclick="Clear()">Reset</button>
+    </div>
+
+    
+
+
+</body>
+</html>

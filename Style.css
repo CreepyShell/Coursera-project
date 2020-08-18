@@ -1,0 +1,38 @@
++#down{
+  background-color:lightgreen;
+  width:500px;
+  height:400px;
+}
+h1{
+  text-align:center;
+}
+#ddd{
+  width:500px;
+  height:500px;
+}
+#main{
+  background-color:Aqua;
+  width:450px;
+  padding-left:10px;
+  position:absolute;
+  left:550px;
+  top:80px;
+}
+button{
+  font-size:20px;
+  border:none;
+  border-bottom:2px solid red;
+   background-color:Aqua;
+}
+#greyfilter:hover,#redfilter:hover,#greenfilter:hover,#rainbow:hover,#blurfilter:hover,#Lighter:hover,#Darker:hover{
+  font-size:20px;
+  border:none;
+  border-bottom:2px solid green;
+   background-color:Green;
+}
+#wi{
+  width:300px;
+}
+body{
+  height:4000px;
+}
